@@ -46,7 +46,8 @@
 		jQuery(document).ready(function($) {
 			$('###arguments.sliderid#').nivoSlider({
 				effect: '#arguments.effect#',
-				pauseTime: #Val(arguments.pausetime) * 1000#
+				pauseTime: #Val(arguments.pausetime) * 1000#,
+				manualAdvance: '#arguments.manualadvance#'
 			});
 		});
 	</script>

@@ -42,6 +42,7 @@ component accessors=true extends='mura.plugin.pluginGenericEventHandler' output=
 			, height = 'AUTO'
 			, sliderid = LCase(Replace(CreateUUID(), '-', '', 'ALL'))
 			, effect = 'random'
+			, manualadvance = true
 			, showcaption = true
 			, pausetime = 3
 			, outputslidelinks = true

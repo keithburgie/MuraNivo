@@ -45,6 +45,7 @@
 		, height = 'AUTO'
 		, sliderid = LCase(Replace(CreateUUID(), '-', '', 'ALL'))
 		, effect = 'random'
+		, manualadvance = true
 		, showcaption = true
 		, pausetime = 3
 		, outputslidelinks = true
@@ -57,6 +58,8 @@
 	#availableObjectParams dt.first { padding-top:0; }
 </style>
 <script>
+
+	// Show custom size options when selected
 	jQuery('#size').change(function(){
 		var o = jQuery('#customOptions');
 		if ( this.value == 'custom' ) {
@@ -65,6 +68,16 @@
 			o.hide().find(':input').val('AUTO');
 		}
 	});
+
+	// Show auto-advance time option if manual advance turned off
+	jQuery('input[name=manualadvance]:radio').click(function() {
+   if (jQuery('input[name=manualadvance]:checked').val() == "false") {
+      jQuery('#pausetime').fadeIn('slow');
+    } else if (jQuery('input[name=manualadvance]:checked').val() == "true") {
+      jQuery('#pausetime').fadeOut('slow');
+    }
+	});
+
 </script>
 <cfoutput>
 	<div id="availableObjectParams"	
@@ -72,6 +85,7 @@
 		data-name="MuraNivo" 
 		data-objectid="#$.event('objectID')#">
 		<dl class="singleColumn">
+
 			<!--- NIVO THEME --->
 			<dt class="first"><label for="size">Nivo Theme</label></dt>
 			<dd>
@@ -81,6 +95,7 @@
 					</cfloop>
 				</select>
 			</dd>
+
 			<!--- FEED --->
 			<dt><label for="feed">Local Content Index</label></dt>
 			<dd>
@@ -100,6 +115,7 @@
 					<input type="hidden" name="feed" value="" />
 				</cfif>
 			</dd>
+
 			<!--- SLIDER SIZE --->
 			<dt><label for="size">Slider Size</label></dt>
 			<dd>
@@ -109,6 +125,7 @@
 					</cfloop>
 				</select>
 			</dd>
+
 			<!--- SLIDER WIDTH / HEIGHT --->
 			<div id="customOptions"<cfif params.size neq 'custom'> style="display:none;"</cfif>>
 				<dt><label for="width">Slider Width</label></dt>
@@ -126,6 +143,7 @@
 						value="#params.height#" />
 				</dd>
 			</div>
+
 			<!--- SLIDER EFFECT --->
 			<dt><label for="size">Transition Effect</label></dt>
 			<dd>
@@ -135,6 +153,7 @@
 					</cfloop>
 				</select>
 			</dd>
+
 			<!--- SLIDER ID --->
 			<dt><label for="sliderid">Slider CSS ID</label></dt>
 			<dd>
@@ -143,6 +162,32 @@
 					class="objectParam" 
 					value="#params.sliderid#" />
 			</dd>
+			
+			<!-- MANUAL ADVANCE -->
+			<dt><label for="manualadvance">Manually Advance Slides</label></dt>
+			<dd>
+				<label class="radio inline">
+					<input type="radio" class="objectParam" name="manualadvance" value="true" <cfif params.manualadvance> checked="checked"</cfif> /> 
+					Yes
+				</label>
+				<label class="radio inline">
+					<input type="radio" class="objectParam" name="manualadvance" value="false" <cfif not params.manualadvance> checked="checked"</cfif> /> 
+					No
+				</label>
+			</dd>
+
+			<!--- PAUSE TIME --->
+			<div id="pausetime" style="display:none;">
+				<dt><label for="pausetime">How long to show each slide (in seconds)</label></dt>
+				<dd>
+					<select name="pausetime" id="pausetime" class="objectParam">
+						<cfloop from="1" to="10" index="s">
+							<option value="#s#"<cfif params.pausetime eq s> selected="selected"</cfif>>#HTMLEditFormat(s)#</option>
+						</cfloop>
+					</select>
+				</dd>
+			</div>
+
 			<!--- SHOW CAPTION --->
 			<dt><label for="showcaption">Show Caption</label></dt>
 			<dd>
@@ -154,15 +199,6 @@
 					<input type="radio" class="objectParam" name="showcaption" value="false" <cfif not params.showcaption> checked="checked"</cfif> /> 
 					No
 				</label>
-			</dd>
-			<!--- PAUSE TIME --->
-			<dt><label for="size">How long to show each slide (in seconds)</label></dt>
-			<dd>
-				<select name="pausetime" id="pausetime" class="objectParam">
-					<cfloop from="1" to="10" index="s">
-						<option value="#s#"<cfif params.pausetime eq s> selected="selected"</cfif>>#HTMLEditFormat(s)#</option>
-					</cfloop>
-				</select>
 			</dd>
 
 			<!--- LINK SLIDES --->
@@ -177,6 +213,7 @@
 					No
 				</label>
 			</dd>
+
 			<!--- MISC. --->
 			<input type="hidden" name="configureddts" class="objectParam" value="#now()#" />
 			<input type="hidden" name="configuredby" class="objectParam" value="#HTMLEditFormat($.currentUser('LName'))#, #HTMLEditFormat($.currentUser('FName'))#" />

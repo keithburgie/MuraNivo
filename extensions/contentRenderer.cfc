@@ -24,6 +24,7 @@ component accessors=true extends='mura.cfobject' output=false {
 		, width='AUTO'
 		, sliderid = '#LCase(Replace(CreateUUID(), '-', '', 'ALL'))#'
 		, effect = 'random'
+		, manualadvance = true
 		, showcaption = true
 		, pausetime = '3'
 		, outputslidelinks = true

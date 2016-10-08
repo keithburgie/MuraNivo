@@ -12,14 +12,10 @@ function init(data) {
 	initConfigurator(data,{
 		url: '../plugins/MuraNivo/extensions/configurators/muraNivo/configurator.cfm'
 		, pars: ''
-		, title: 'MuraNivo'
+		, title: 'MuraNivo Slider'
 		, init: function(){}
 		, destroy: function(){}
 		, validate: function(){
-			// if ( jQuery('#width').val() != 900 ) {
-			// 	var response = confirm('Dude...seriously?');
-			// 	if ( !response ) return false;
-			// };
 			return true;
 		}
 	});
